@@ -11,13 +11,13 @@ app = Flask(__name__)
 # Load the airports data
 airports = pd.read_csv('airports.csv')
 
-@app.route('/predict', methods=['POST'])
+# Change the predict endpoint to use GET with query parameters
+@app.route('/predict', methods=['GET'])
 def predict():
     try:
-        # Parse input JSON data
-        input_data = request.get_json()
-        day_of_week = input_data.get('day_of_week')
-        airport_id = input_data.get('airport_id')
+        # Parse query parameters
+        day_of_week = request.args.get('day_of_week')
+        airport_id = request.args.get('airport_id')
 
         if day_of_week is None or airport_id is None:
             return jsonify({'error': 'day_of_week and airport_id are required'}), 400
