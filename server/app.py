@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
@@ -10,6 +11,18 @@ app = Flask(__name__)
 
 # Load the airports data
 airports = pd.read_csv('airports.csv')
+
+# Swagger setup
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Flight Delay Prediction API"
+    }
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 # Change the predict endpoint to use GET with query parameters
 @app.route('/predict', methods=['GET'])

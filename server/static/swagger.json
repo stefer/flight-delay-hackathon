@@ -1,0 +1,78 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Flight Delay Prediction API",
+    "description": "API for predicting flight delays."
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/predict": {
+      "get": {
+        "summary": "Predict flight delay",
+        "parameters": [
+          {
+            "name": "day_of_week",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Day of the week."
+          },
+          {
+            "name": "airport_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Airport ID."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prediction result",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "delay_chance": {
+                  "type": "number",
+                  "description": "Chance of delay."
+                },
+                "confidence": {
+                  "type": "number",
+                  "description": "Confidence level."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airports": {
+      "get": {
+        "summary": "Get list of airports",
+        "responses": {
+          "200": {
+            "description": "List of airports",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Airport ID."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Airport name."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
